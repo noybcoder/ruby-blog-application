@@ -88,12 +88,6 @@ jobs:
       ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
       ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
 
-    # services:
-    #  redis:
-    #    image: valkey/valkey:8
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -107,27 +101,36 @@ jobs:
         run: |
           bundle exec rails db:prepare
       
-      # - name: Run tests
-      #   env:
-      #     RAILS_ENV: test
-      #     # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      #     # REDIS_URL: redis://localhost:6379/0
-      #   run: bin/rails db:test:prepare test
-
       - name: Run tests
-        run: |
-          bundle exec rails test
-          bundle exec rails test:system
+        env:
+          RAILS_ENV: test
+          # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          # REDIS_URL: redis://localhost:6379/0
+        run: bin/rails db:test:prepare test
 
   system-test:
     runs-on: ubuntu-latest
 
-    # services:
-    #  redis:
-    #    image: valkey/valkey:8
-    #    ports:
-    #      - 6379:6379
-    #    options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432
+      RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
