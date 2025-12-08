@@ -84,9 +84,9 @@ jobs:
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432
       RAILS_ENV: test
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      # ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+      # ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
 
     steps:
       - name: Checkout code
@@ -127,9 +127,9 @@ jobs:
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5432
       RAILS_ENV: test
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-      ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      # RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      # ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+      # ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
 
     steps:
       - name: Checkout code
