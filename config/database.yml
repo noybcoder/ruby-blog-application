@@ -22,13 +22,13 @@ default: &default
 
 development:
   <<: *default
-  database: blog_development
+  database: ruby_blog_application_development
 
   # The specified database role being used to connect to PostgreSQL.
   # To create additional roles in PostgreSQL see `$ createuser --help`.
   # When left blank, PostgreSQL will use the default role. This is
   # the same name as the operating system user running Rails.
-  #username: blog
+  #username: ruby_blog_application
 
   # The password associated with the PostgreSQL role (username).
   #password:
@@ -56,12 +56,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  # database: blog_test
-  database: <%= ENV.fetch('PG_DATABASE', 'postgres') %> 
-  host:     <%= ENV.fetch('PG_HOST',  'localhost') %>
-  username: <%= ENV.fetch('PG_USER', nil) %>
-  password: <%= ENV.fetch('PG_PASSWORD', nil) %>
-  port:     <%= ENV.fetch('PG_PORT', 5432) %>
+  database: ruby_blog_application_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -92,18 +87,18 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: blog_production
-    username: blog
-    password: <%= ENV["BLOG_DATABASE_PASSWORD"] %>
+    database: ruby_blog_application_production
+    username: ruby_blog_application
+    password: <%= ENV["RUBY_BLOG_APPLICATION_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    database: blog_production_cache
+    database: ruby_blog_application_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    database: blog_production_queue
+    database: ruby_blog_application_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    database: blog_production_cable
+    database: ruby_blog_application_production_cable
     migrations_paths: db/cable_migrate
